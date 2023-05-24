@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "solid-start dev",
     "build": "solid-start build",
-    "start": "solid-start start"
+    "start": "solid-start start --port 2100"
   },
   "type": "module",
   "devDependencies": {
