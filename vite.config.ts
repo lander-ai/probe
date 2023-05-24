@@ -4,4 +4,10 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [solid({ adapter: cloudflare({}) })],
+  server: {
+    port: 2100,
+    hmr: {
+      port: 2100,
+    },
+  },
 });
