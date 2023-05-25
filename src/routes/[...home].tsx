@@ -183,11 +183,11 @@ export const Home = () => {
                           mt="40px"
                           onClick={() => handleDownload(download)}
                         >
-                          {downloads[0].url ? "Download" : "Coming soon"}
+                          {download.url ? "Download" : "Coming soon"}
                         </Button>
                         <Text.Body
                           textAlign="center"
-                          color={downloads[0].url ? "text" : "gray"}
+                          color={download.url ? "text" : "gray"}
                           mt="8px"
                         >
                           {download.os.name}
