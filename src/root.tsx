@@ -1,7 +1,7 @@
 // @refresh reload
-import { onMount, Show, Suspense } from "solid-js";
+import { onMount, Suspense } from "solid-js";
 import { createStore } from "solid-js/store";
-import { isServer } from "solid-js/web";
+import { Assets } from "solid-js/web";
 import {
   Body,
   ErrorBoundary,
@@ -36,7 +36,7 @@ const SWrapper = styled("div")`
   }
 `;
 
-export default function Root() {
+export default () => {
   const [theme, setTheme] = createStore<DefaultTheme>(getTheme(ThemeMode.Dark));
 
   onMount(async () => {
@@ -64,9 +64,9 @@ export default function Root() {
         <Title>Lander</Title>
         <Meta charset="utf-8" />
         <Meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Show when={isServer}>
-          <style>{extractCss()}</style>
-        </Show>
+        <Assets>
+          <style innerHTML={extractCss()} />
+        </Assets>
       </Head>
       <ThemeProvider theme={theme}>
         <Body>
@@ -84,4 +84,4 @@ export default function Root() {
       </ThemeProvider>
     </Html>
   );
-}
+};
