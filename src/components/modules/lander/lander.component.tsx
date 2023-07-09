@@ -141,11 +141,10 @@ export const Lander: Component = () => {
               Notes (selected text)
             </Text.Callout>
             <SCommandApplicationSubtitle mt="4px" color="gray">
-              On {new Date().toLocaleString("default", { month: "long" })}{" "}
-              {new Date().getDate()}, {new Date().getFullYear()}, I met with the
-              mayor to start a youth centre. I have been passionate about this
-              idea for a long time and it was great to finally have the
-              opportunity to present it to someone in a position of power...
+              March 2023 - Wow, ChatGPT has changed the world! Although, I
+              wonder if there's a better way to interact with it in my
+              workflows. Better yet, what if it could index my entire laptop? I
+              should create an app to do this.
             </SCommandApplicationSubtitle>
           </div>
         </SCommandApplication>
