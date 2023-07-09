@@ -7,19 +7,11 @@ import { Button, Text } from "~/components/atoms";
 import { Lander } from "~/components/modules";
 
 const SWrapper = styled("div")`
-  width: 100vw;
-  height: 100vh;
-  padding: 80px 0;
+  padding: 40px 16px;
   display: grid;
   align-items: center;
   align-content: center;
   justify-content: center;
-  overflow-y: auto;
-`;
-
-const SContentWrapper = styled("div")`
-  margin: 0 16px;
-  margin-bottom: 200px;
 `;
 
 const SDownloadsWrapper = styled("div")`
@@ -87,35 +79,33 @@ export const Home = () => {
     }
 
     const downloads = response.downloads.map((download) => ({
-      os: { name: download.os.name },
+      os: { name: download.os.name, target: download.os.name },
       url: download.url,
     }));
 
-    downloads
+    return downloads
       .map((download) => {
         if (download.os.name === "macOS") {
           download.os.name = "macOS (universal)";
         }
 
         if (download.os.name === "windows") {
-          download.os.name = "Windows";
+          download.os.name = "Windows 10 & 11";
         }
 
         if (download.os.name === "linux") {
-          download.os.name = "Linux";
+          download.os.name = "Linux (X11)";
         }
 
         return download;
       })
       .sort((a) => {
-        if (a.os.name === response.os.name) {
+        if (a.os.target === response.os.name) {
           return -1;
         }
 
         return 0;
       });
-
-    return downloads;
   });
 
   const [isDownloadDisabled, setIsDownloadDisabled] = createSignal(false);
@@ -143,63 +133,61 @@ export const Home = () => {
       <Title>Lander</Title>
 
       <SWrapper>
-        <SContentWrapper>
-          <Text.SuperLargeTitle textAlign="center" fontWeight="medium">
-            Talk to your apps
-          </Text.SuperLargeTitle>
-          <Text.Title textAlign="center" color="gray" mt="8px" mb="40px">
-            With Lander, you can use AI to start a chat within any application
-            on your system
-          </Text.Title>
+        <Text.SuperLargeTitle textAlign="center" fontWeight="medium">
+          Talk to your apps
+        </Text.SuperLargeTitle>
+        <Text.Title textAlign="center" color="gray" mt="8px" mb="40px">
+          With Lander, you can use AI to start a chat within any application on
+          your system
+        </Text.Title>
 
-          <Lander />
+        <Lander />
 
-          <Show when={downloads()} keyed>
-            {(downloads) => (
-              <>
-                <Button
-                  disabled={!downloads[0].url || isDownloadDisabled()}
-                  margin="auto"
-                  mt="40px"
-                  onClick={() => handleDownload(downloads[0])}
-                >
-                  {downloads[0].url ? "Download" : "Coming soon"}
-                </Button>
-                <Text.Body
-                  textAlign="center"
-                  mt="8px"
-                  color={downloads[0].url ? "text" : "gray"}
-                >
-                  {downloads[0].os.name}
-                </Text.Body>
+        <Show when={downloads()} keyed>
+          {(downloads) => (
+            <>
+              <Button
+                disabled={!downloads[0].url || isDownloadDisabled()}
+                margin="auto"
+                mt="40px"
+                onClick={() => handleDownload(downloads[0])}
+              >
+                {downloads[0].url ? "Download" : "Coming soon"}
+              </Button>
+              <Text.Body
+                textAlign="center"
+                mt="8px"
+                color={downloads[0].url ? "text" : "gray"}
+              >
+                {downloads[0].os.name}
+              </Text.Body>
 
-                <SDownloadsWrapper>
-                  <For each={downloads.slice(1)}>
-                    {(download) => (
-                      <div>
-                        <Button
-                          disabled={!download.url || isDownloadDisabled()}
-                          margin="auto"
-                          mt="40px"
-                          onClick={() => handleDownload(download)}
-                        >
-                          {download.url ? "Download" : "Coming soon"}
-                        </Button>
-                        <Text.Body
-                          textAlign="center"
-                          color={download.url ? "text" : "gray"}
-                          mt="8px"
-                        >
-                          {download.os.name}
-                        </Text.Body>
-                      </div>
-                    )}
-                  </For>
-                </SDownloadsWrapper>
-              </>
-            )}
-          </Show>
-        </SContentWrapper>
+              <SDownloadsWrapper>
+                <For each={downloads.slice(1)}>
+                  {(download) => (
+                    <div>
+                      <Button
+                        disabled={!download.url || isDownloadDisabled()}
+                        margin="auto"
+                        mt="40px"
+                        onClick={() => handleDownload(download)}
+                      >
+                        {download.url ? "Download" : "Coming soon"}
+                      </Button>
+                      <Text.Body
+                        textAlign="center"
+                        color={download.url ? "text" : "gray"}
+                        mt="8px"
+                      >
+                        {download.os.name}
+                      </Text.Body>
+                    </div>
+                  )}
+                </For>
+              </SDownloadsWrapper>
+            </>
+          )}
+        </Show>
       </SWrapper>
     </main>
   );
